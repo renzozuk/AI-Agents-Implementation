@@ -1,0 +1,16 @@
+data_completion_task:
+  description: >
+    1. Carefully analyze the content of the supplemental email: {last_response_email}.
+    2. Retrieve the existing partial data structure: {partial_json}.
+    3. Identify fields currently marked as null or incomplete.
+    4. Merge the new information from the email into the JSON, ensuring 
+       monetary values are converted to cents.
+    5. STRICT AUDIT: If ANY field in the schema remains null, empty, or 
+       missing after the update, set 'status_extracao' to 'INCOMPLETE'.
+    6. Only set 'status_extracao' to 'COMPLETE' if every single field is 
+       populated with valid data.
+    7. If the final status is 'INCOMPLETE', you must reply the email with the Reply Email Tool asking for the missing fields.
+  expected_output: >
+    A consolidated JSON object following the FullExtractionSchema, with 
+    updated values and the final 'status_extracao' based on the Zero Null Policy.
+  agent: data_completion_agent

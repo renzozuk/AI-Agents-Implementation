@@ -1,0 +1,31 @@
+data_extractor_task:
+  description: >
+    1. Use the search tool to locate: 
+     - Company registration data (CNPJ, Corporate Name, etc.).
+     - Tables or clauses regarding positions (vagas), roles, and compensation.
+     - Effective dates and the total contract value.
+    2. Convert monetary values to cents (e.g., $ 1,000.00 -> 100000).
+    3. Identify the PDF title and page count (if available in metadata or text).
+    4. If at least one field was not found, set the extraction_status to 'INCOMPLETE'.
+    5. You need to add a UUID to the pdf_title using the UUID generator tool.
+  expected_output: >
+    Structured JSON matching the FullExtractionSchema.
+    The pdf_title field must have this format: {title}_{uuid}.
+  agent:
+    extraction_agent
+
+notification_task:
+  description: >
+    1. Review the output from the Contract Data Analyst.
+    2. If 'extraction_status' is 'COMPLETE', skip sending an email and set action_taken to 'SKIPPED'.
+    3. If 'extraction_status' is 'INCOMPLETE', identify exactly which fields are missing (null).
+    4. Compose a polite email to the representative.
+    5. You must send the email to the representative's email address found in the Company Data.'
+    5. Subject must include the Contract Title.
+    6. Send the email using the 'Email Sending Tool' and report the result.
+  expected_output: >
+    A JSON object confirming if the email was sent and the tool's response.
+  agent:
+    extraction_agent
+  context:
+    - data_extractor_task

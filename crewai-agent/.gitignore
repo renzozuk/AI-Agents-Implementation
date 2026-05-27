@@ -1,0 +1,6 @@
+src/resources/
+.env
+*.md
+temp*
+data
+agentops.log
