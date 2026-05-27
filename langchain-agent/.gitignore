@@ -1,0 +1,15 @@
+/.env
+/01 - Contrato.pdf
+/.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# JetBrains IDEs
+.idea/
+*.iml
+modules.xml
+.idea_modules/
+/agentops.log
+/database.ini
